@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useDashboardQuery } from '@/hooks/useDashboardQuery'
+import { useDashboardQuery } from '@/hooks/use-dashboard-query'
 
 const statusBadge: Record<string, { label: string; variant: 'success' | 'warning' | 'neutral' }> = {
   completed: { label: 'Hoàn thành', variant: 'success' },

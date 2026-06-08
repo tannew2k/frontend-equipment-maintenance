@@ -1,7 +1,7 @@
 import { MdMenu, MdLogout, MdDarkMode, MdLightMode } from 'react-icons/md'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { useTheme } from '@/hooks/useTheme'
+import { useTheme } from '@/hooks/use-theme'
 import { useAuthStore } from '@/stores/auth-store'
 import { USER_ROLE_LABEL } from '@/config/constants'
 

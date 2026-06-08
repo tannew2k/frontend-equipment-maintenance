@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { USER_ROLE_LABEL } from '@/config/constants'
-import { useUsersQuery } from '@/hooks/useUsersQuery'
+import { useUsersQuery } from '@/hooks/use-users-query'
 
 type BadgeVariant = 'info' | 'warning' | 'neutral'
 const roleVariant: Record<string, BadgeVariant> = {

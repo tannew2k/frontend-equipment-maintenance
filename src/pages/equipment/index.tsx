@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { EQUIPMENT_STATUS_LABEL, EQUIPMENT_CATEGORY_LABEL } from '@/config/constants'
-import { useEquipmentQuery } from '@/hooks/useEquipmentQuery'
+import { useEquipmentQuery } from '@/hooks/use-equipment-query'
 import { formatDate } from '@/utils/date'
 
 type StatusVariant = 'success' | 'warning' | 'destructive' | 'neutral'
