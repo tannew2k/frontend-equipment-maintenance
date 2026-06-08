@@ -74,7 +74,7 @@ Tất cả primitive UI nằm trong `src/components/ui/`, được build trên R
 
 | Thứ | Convention | Ví dụ |
 |---|---|---|
-| File | kebab-case | `equipment-service.ts`, `use-auth.ts` |
+| File | kebab-case | `equipment-service.ts`, `auth-store.ts`, `use-auth.ts` |
 | Component | PascalCase | `EquipmentPage`, `TableSkeleton` |
 | Hook | camelCase, prefix `use` | `useEquipmentQuery` |
 | Store | camelCase, suffix `Store` | `useAuthStore` |
@@ -188,7 +188,7 @@ export const mockSuppliers: Supplier[] = [
 
 ### Bước 4 — Viết query hook
 
-Tạo `src/hooks/useSuppliersQuery.ts`:
+Tạo `src/hooks/use-suppliers-query.ts`:
 
 ```ts
 import { useQuery } from '@tanstack/react-query'

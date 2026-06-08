@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { MAINTENANCE_STATUS_LABEL, MAINTENANCE_TYPE_LABEL } from '@/config/constants'
-import { useMaintenanceQuery } from '@/hooks/useMaintenanceQuery'
+import { useMaintenanceQuery } from '@/hooks/use-maintenance-query'
 import { formatDate } from '@/utils/date'
 
 type StatusVariant = 'success' | 'warning' | 'destructive' | 'neutral'
