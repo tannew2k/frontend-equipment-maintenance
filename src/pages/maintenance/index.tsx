@@ -3,14 +3,11 @@ import { MdAdd } from 'react-icons/md'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { MAINTENANCE_STATUS_LABEL, MAINTENANCE_TYPE_LABEL } from '@/config/constants'
-
-const mockData = [
-  { id: '1', equipment: 'Máy điều hòa tầng 2', code: 'EQ-001', type: 'preventive', status: 'completed', scheduledDate: '01/06/2026', technician: 'Nguyễn Văn A', description: 'Vệ sinh phin lọc, kiểm tra gas' },
-  { id: '2', equipment: 'Máy phát điện dự phòng', code: 'EQ-002', type: 'corrective', status: 'in_progress', scheduledDate: '07/06/2026', technician: 'Trần Thị B', description: 'Thay thế bộ khởi động' },
-  { id: '3', equipment: 'Thang máy A', code: 'EQ-003', type: 'inspection', status: 'pending', scheduledDate: '15/06/2026', technician: 'Lê Văn C', description: 'Kiểm tra định kỳ 6 tháng' },
-]
+import { useMaintenanceQuery } from '@/hooks/useMaintenanceQuery'
+import { formatDate } from '@/utils/date'
 
 type StatusVariant = 'success' | 'warning' | 'destructive' | 'neutral'
 const statusVariant: Record<string, StatusVariant> = {
@@ -27,9 +24,26 @@ const filters = [
   { value: 'completed', label: 'Hoàn thành' },
 ]
 
+function TableSkeleton() {
+  return Array.from({ length: 4 }).map((_, i) => (
+    <TableRow key={i}>
+      <TableCell>
+        <Skeleton className="h-4 w-36 mb-1" />
+        <Skeleton className="h-3 w-16" />
+      </TableCell>
+      <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+      <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+      <TableCell><Skeleton className="h-4 w-28" /></TableCell>
+      <TableCell><Skeleton className="h-4 w-40" /></TableCell>
+      <TableCell><Skeleton className="h-5 w-24 rounded-full" /></TableCell>
+      <TableCell />
+    </TableRow>
+  ))
+}
+
 export default function MaintenancePage() {
   const [activeFilter, setActiveFilter] = useState('all')
-  const filtered = mockData.filter((m) => activeFilter === 'all' || m.status === activeFilter)
+  const { data: records, isLoading } = useMaintenanceQuery(activeFilter)
 
   return (
     <div className="space-y-5">
@@ -68,24 +82,34 @@ export default function MaintenancePage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filtered.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>
-                  <p className="font-medium">{item.equipment}</p>
-                  <p className="text-xs text-muted-foreground font-mono">{item.code}</p>
-                </TableCell>
-                <TableCell className="text-muted-foreground">{MAINTENANCE_TYPE_LABEL[item.type]}</TableCell>
-                <TableCell className="text-muted-foreground">{item.scheduledDate}</TableCell>
-                <TableCell className="text-muted-foreground">{item.technician}</TableCell>
-                <TableCell className="max-w-xs truncate text-muted-foreground">{item.description}</TableCell>
-                <TableCell>
-                  <Badge variant={statusVariant[item.status]}>{MAINTENANCE_STATUS_LABEL[item.status]}</Badge>
-                </TableCell>
-                <TableCell>
-                  <Button variant="ghost" size="sm">Xem</Button>
+            {isLoading ? (
+              <TableSkeleton />
+            ) : !records || records.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
+                  Không có lịch bảo trì nào
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              records.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>
+                    <p className="font-medium">{item.equipmentName}</p>
+                    <p className="text-xs text-muted-foreground font-mono">{item.equipmentCode}</p>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">{MAINTENANCE_TYPE_LABEL[item.type]}</TableCell>
+                  <TableCell className="text-muted-foreground">{formatDate(item.scheduledDate)}</TableCell>
+                  <TableCell className="text-muted-foreground">{item.technicianName ?? '—'}</TableCell>
+                  <TableCell className="max-w-xs truncate text-muted-foreground">{item.description}</TableCell>
+                  <TableCell>
+                    <Badge variant={statusVariant[item.status]}>{MAINTENANCE_STATUS_LABEL[item.status]}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="ghost" size="sm">Xem</Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </Card>

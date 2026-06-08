@@ -38,5 +38,14 @@ export const USER_ROLE_LABEL: Record<string, string> = {
   viewer: 'Xem',
 }
 
+export const EQUIPMENT_CATEGORY_LABEL: Record<string, string> = {
+  electrical: 'Điện',
+  mechanical: 'Cơ khí',
+  it: 'Công nghệ thông tin',
+  facility: 'Cơ sở hạ tầng',
+  vehicle: 'Phương tiện',
+  other: 'Khác',
+}
+
 export const PAGE_SIZE_OPTIONS = [10, 20, 50]
 export const DEFAULT_PAGE_SIZE = 10
